@@ -5266,7 +5266,7 @@ class Doctor:
             address_entry.insert('1.0', user_info[4])
             address_entry.config(state='disabled')
 
-            language_label = tk.Label(personal_content_frame, text='Contact Number: ', font=('Open Sans', 12, 'bold'), bg='white',
+            language_label = tk.Label(personal_content_frame, text='Language: ', font=('Open Sans', 12, 'bold'), bg='white',
                                       fg='#000000', width=20, anchor='e')
             language_label.grid(row=10, column=0, padx=(150, 5), pady=5, sticky='e')
             language_entry_frame = tk.Frame(personal_content_frame, bg='#D0F9EF', width=380, height=45)
@@ -5277,7 +5277,7 @@ class Doctor:
             language_entry.config(state='disabled', disabledbackground='#D0F9EF')
             all_entries.append(language_entry)
 
-            working_label = tk.Label(personal_content_frame, text='Contact Number: ', font=('Open Sans', 12, 'bold'), bg='white',
+            working_label = tk.Label(personal_content_frame, text='Working Hours: ', font=('Open Sans', 12, 'bold'), bg='white',
                                      fg='#000000', width=20, anchor='e')
             working_label.grid(row=11, column=0, padx=(150, 5), pady=5, sticky='e')
             working_entry_frame = tk.Frame(personal_content_frame, bg='#D0F9EF', width=380, height=45)
@@ -5288,7 +5288,7 @@ class Doctor:
             working_entry.config(state='disabled', disabledbackground='#D0F9EF')
             all_entries.append(working_entry)
 
-            specialize_label = tk.Label(personal_content_frame, text='Contact Number: ', font=('Open Sans', 12, 'bold'), bg='white',
+            specialize_label = tk.Label(personal_content_frame, text='Specialize In: ', font=('Open Sans', 12, 'bold'), bg='white',
                                         fg='#000000', width=20, anchor='e')
             specialize_label.grid(row=12, column=0, padx=(150, 5), pady=(5, 15), sticky='e')
             specialize_entry_frame = tk.Frame(personal_content_frame, bg='#D0F9EF', width=380, height=45)
