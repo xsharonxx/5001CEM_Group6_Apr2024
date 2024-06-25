@@ -1428,6 +1428,7 @@ class User:
                         if datetime_t not in booked_time_list:
                             time_button_list[t][1] = 0
                             time_button_list[t][0].state(['!disabled'])
+            # Else the working hours is none, the time buttons will be organized based on clinic operation hours
             elif working and len(working) == 1:
                 cursor.execute('''SELECT ar.ar_time FROM appointment_request ar
                                JOIN appointment a ON ar.ar_id = a.ar_id
@@ -1435,19 +1436,42 @@ class User:
                                (d[0], schedule_calendar.get_date()))
                 booked_time = cursor.fetchall()
                 booked_time_list = [self.timedelta_to_time(b_time[0]) for b_time in booked_time]
-                row_value = 0
-                column_value = 0
-                for t in time_list:
-                    datetime_t = datetime.strptime(t, time_format_12).time()
-                    time_button_list[t][0].grid(row=row_value, column=column_value, padx=(0, 5), pady=(0, 5), sticky='nw')
-                    column_value += 1
-                    if column_value == 4:
-                        column_value = 0
-                        row_value += 1
-                    if datetime_t not in booked_time_list:
-                        time_button_list[t][1] = 0
-                        time_button_list[t][0].state(['!disabled'])
-            # Else the working is none, the time buttons will be organized based on clinic operation hours
+
+                if len(operation) > 1 and operation[1] != '24 hours':
+                    operation_hour = operation[1].split('-')
+                    start_operate = operation_hour[0].strip()
+                    start_operate = datetime.strptime(start_operate, time_format_12).time()
+                    end_operate = operation_hour[1].strip()
+                    end_operate = datetime.strptime(end_operate, time_format_12) - timedelta(hours=1)
+                    end_operate = end_operate.time()
+
+                    row_value = 0
+                    column_value = 0
+                    for t in time_list:
+                        datetime_t = datetime.strptime(t, time_format_12).time()
+                        if start_operate <= datetime_t <= end_operate:
+                            time_button_list[t][0].grid(row=row_value, column=column_value, padx=(0, 5), pady=(0, 5), sticky='nw')
+                            column_value += 1
+                            if column_value == 4:
+                                column_value = 0
+                                row_value += 1
+                            if datetime_t not in booked_time_list:
+                                time_button_list[t][1] = 0
+                                time_button_list[t][0].state(['!disabled'])
+                else:
+                    row_value = 0
+                    column_value = 0
+                    for t in time_list:
+                        datetime_t = datetime.strptime(t, time_format_12).time()
+                        time_button_list[t][0].grid(row=row_value, column=column_value, padx=(0, 5), pady=(0, 5), sticky='nw')
+                        column_value += 1
+                        if column_value == 4:
+                            column_value = 0
+                            row_value += 1
+                        if datetime_t not in booked_time_list:
+                            time_button_list[t][1] = 0
+                            time_button_list[t][0].state(['!disabled'])
+            # If the user choose 'Random'
             elif len(operation) > 1 and operation[1] != '24 hours':
                 operation_hour = operation[1].split('-')
                 start_operate = operation_hour[0].strip()
